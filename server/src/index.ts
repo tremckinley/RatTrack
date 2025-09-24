@@ -45,11 +45,11 @@ app.get('/yt-video-info/:videoId', async (req, res) => {
   console.log(`YouTube route called with videoId: ${videoId}`)
   
   // Ensure CSP header is set for this specific route
-  setCSPHeaders(res, `/yt-video-info/${videoId}`)
+  //setCSPHeaders(res, `/yt-video-info/${videoId}`)
   
   // Verify header was set
-  console.log('YouTube route - CSP header after setting:', res.getHeader('Content-Security-Policy'))
-  console.log('YouTube route - X-CSP header after setting:', res.getHeader('X-Content-Security-Policy'))
+  //console.log('YouTube route - CSP header after setting:', res.getHeader('Content-Security-Policy'))
+  //console.log('YouTube route - X-CSP header after setting:', res.getHeader('X-Content-Security-Policy'))
   
   try {
     const videoInfo = await youtubeApi.getVideoInfo(videoId)
