@@ -13,5 +13,9 @@ export default defineConfig(({ command }) => ({
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
     },
+    // Disable CSP for development
+    headers: {
+      'Content-Security-Policy': "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src 'self' http://localhost:* ws://localhost:*;"
+    }
   },
 }))
