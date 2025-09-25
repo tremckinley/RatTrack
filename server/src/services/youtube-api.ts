@@ -1,5 +1,7 @@
 import { google } from 'googleapis';
-const youtube = google.youtube({version: 'v3', auth: ''})
+import dotenv from 'dotenv'
+dotenv.config()
+const youtube = google.youtube({version: 'v3', auth: process.env.YOUTUBE_API_KEY})
 
 export const youtubeApi = {
   getVideoInfo: async (videoId: string) => {
@@ -10,10 +12,10 @@ export const youtubeApi = {
     })
     return response
   },
-  getVideoCaptions: async (videoId: string) => {
+  getVideoCaptions: async (videoId: string) => { //Does not retrieve the captions, only the list of captions that exist for a video
     const response = await youtube.captions.list({
-        videoId: videoId,
-        part: ['snippet'],
+      part: ['snippet'],
+      videoId: videoId,
         //key: process.env.YOUTUBE_API_KEY
     })
     return response

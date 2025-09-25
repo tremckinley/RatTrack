@@ -1,3 +1,9 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
+// Debug: Check if environment variable is loaded
+console.log('YOUTUBE_API_KEY loaded:', process.env.YOUTUBE_API_KEY ? 'Yes' : 'No')
+
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -43,14 +49,7 @@ app.get('/yt-video-info/:videoId', async (req, res) => {
   const videoId = req.params.videoId
   
   console.log(`YouTube route called with videoId: ${videoId}`)
-  
-  // Ensure CSP header is set for this specific route
-  //setCSPHeaders(res, `/yt-video-info/${videoId}`)
-  
-  // Verify header was set
-  //console.log('YouTube route - CSP header after setting:', res.getHeader('Content-Security-Policy'))
-  //console.log('YouTube route - X-CSP header after setting:', res.getHeader('X-Content-Security-Policy'))
-  
+    
   try {
     const videoInfo = await youtubeApi.getVideoInfo(videoId)
     console.log('YouTube API response received')
@@ -59,6 +58,12 @@ app.get('/yt-video-info/:videoId', async (req, res) => {
     console.error('YouTube API error:', error)
     res.status(500).json({ error: 'Failed to fetch video info' })
   }
+})
+
+app.get('/yt-video-captions/:videoId', async (req, res) => {
+  const videoId = req.params.videoId
+  const captions = await youtubeApi.getVideoCaptions(videoId)
+  res.json(captions)
 })
 
 // Static serve client build if present
