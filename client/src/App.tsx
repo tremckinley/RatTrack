@@ -1,10 +1,18 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [health, setHealth] = useState<string | null>(null)
+
+  const fetchHealth: () => Promise<void> = async () => {
+    const response = await fetch('http://localhost:3000/health')
+    const data = await response.json()
+    setHealth(data.status);
+  }
 
   return (
     <>
@@ -24,6 +32,8 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+        <button onClick={fetchHealth}>Fetch Health</button>
+        <p style={{ color: health === 'ok' ? 'green' : 'red' }}>Health: {health}</p>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
